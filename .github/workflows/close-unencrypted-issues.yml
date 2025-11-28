@@ -1,0 +1,39 @@
+name: Close non-encrypted issues
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  check-encryption:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Check for PGP encryption
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.issue.body || '';
+            const isPGPEncrypted = body.includes('-----BEGIN PGP MESSAGE-----');
+            
+            if (!isPGPEncrypted) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `👋 Thanks for reaching out! However, this message doesn't appear to be PGP-encrypted.\n\nPlease encrypt your message using [my public key](https://github.com/${context.repo.owner}.gpg) and open a new issue.\n\nNeed help? Check out [this quick tutorial](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/GPG-GUIDE.md) to get set up in just a few minutes.`
+              });
+              
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                state: 'closed',
+                state_reason: 'not_planned'
+              });
+              
+              console.log('Issue closed: not PGP-encrypted');
+            } else {
+              console.log('Issue is PGP-encrypted, keeping open');
+            }
