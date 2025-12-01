@@ -20,30 +20,17 @@
 
 ## Send an Encrypted Message
 
-<br>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/steps-indicator-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/steps-indicator.svg">
+    <img src="./assets/steps-indicator.svg" alt="Steps: 01 Get Key, 02 Encrypt, 03 Send" width="100%">
+  </picture>
+</p>
 
-<table>
-<thead>
-<tr>
-<th align="center">Step</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>01</code></td>
-<td>Download my <a href="https://github.com/hesreallyhim.gpg">public PGP key</a></td>
-</tr>
-<tr>
-<td align="center"><code>02</code></td>
-<td>Encrypt your message using GPG</td>
-</tr>
-<tr>
-<td align="center"><code>03</code></td>
-<td><a href="../../issues/new">Open an issue</a> with the encrypted text</td>
-</tr>
-</tbody>
-</table>
+<p align="center">
+  <a href="https://github.com/hesreallyhim.gpg">Download key</a> · Encrypt with GPG · <a href="../../issues/new">Open issue</a>
+</p>
 
 <br>
 
