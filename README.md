@@ -42,6 +42,14 @@
       <img src="./assets/download-key-btn.svg" alt="Download Key" height="40">
     </picture>
   </a>
+  &nbsp;&nbsp;
+  <a href="../../issues/new">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/new-issue-btn-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./assets/new-issue-btn.svg">
+      <img src="./assets/new-issue-btn.svg" alt="New Issue" height="40">
+    </picture>
+  </a>
 </p>
 
 <br>
