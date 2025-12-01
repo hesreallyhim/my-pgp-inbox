@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 20">
+  <!-- Minimalist divider with centered diamond accent -->
+
+  <!-- Left line -->
+  <line x1="100" y1="10" x2="290" y2="10" stroke="#ddd" stroke-width="1"/>
+
+  <!-- Center diamond -->
+  <polygon points="300,5 305,10 300,15 295,10" fill="none" stroke="#222" stroke-width="1"/>
+
+  <!-- Right line -->
+  <line x1="310" y1="10" x2="500" y2="10" stroke="#ddd" stroke-width="1"/>
+</svg>
