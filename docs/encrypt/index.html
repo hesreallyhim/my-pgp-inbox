@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encrypt Message</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="lock-icon">
+        <svg viewBox="0 0 40 50" width="32" height="40">
+          <rect x="5" y="22" width="30" height="24" fill="none" stroke="currentColor" stroke-width="2" rx="3"/>
+          <path d="M12,22 L12,12 Q12,2 20,2 Q28,2 28,12 L28,22" fill="none" stroke="currentColor" stroke-width="2"/>
+          <circle cx="20" cy="32" r="3" fill="currentColor"/>
+          <line x1="20" y1="35" x2="20" y2="40" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </div>
+      <h1>Encrypt Message</h1>
+      <p class="subtitle">Client-side PGP encryption</p>
+    </header>
+
+    <main>
+      <div class="input-section">
+        <label for="plaintext">Your message</label>
+        <textarea id="plaintext" placeholder="Type your message here..." rows="6"></textarea>
+      </div>
+
+      <button id="encrypt-btn" class="primary-btn">
+        <span class="btn-text">Encrypt</span>
+        <span class="btn-loading" hidden>Encrypting...</span>
+      </button>
+
+      <div id="output-section" class="output-section" hidden>
+        <label for="ciphertext">Encrypted message</label>
+        <textarea id="ciphertext" readonly rows="8"></textarea>
+
+        <div class="button-row">
+          <button id="copy-btn" class="secondary-btn">Copy</button>
+          <a id="issue-link" class="secondary-btn" target="_blank">Open Issue</a>
+        </div>
+      </div>
+
+      <div id="error-message" class="error-message" hidden></div>
+    </main>
+
+    <footer>
+      <p class="disclaimer">
+        This is a lightweight tool for casual private messages.<br>
+        For high-risk communications, use a local GPG client.
+      </p>
+      <p class="info">
+        Encryption happens entirely in your browser.<br>
+        Your message never leaves your device.
+      </p>
+      <a href="https://github.com/hesreallyhim/my-pgp-inbox" class="back-link">&larr; Back to repository</a>
+    </footer>
+  </div>
+
+  <script src="https://unpkg.com/openpgp@5.11.0/dist/openpgp.min.js"></script>
+  <script>
+    const REPO_OWNER = 'hesreallyhim';
+    const REPO_NAME = 'my-pgp-inbox';
+    const PUBLIC_KEY_URL = `https://github.com/${REPO_OWNER}.gpg`;
+
+    let publicKey = null;
+
+    // Elements
+    const plaintextEl = document.getElementById('plaintext');
+    const ciphertextEl = document.getElementById('ciphertext');
+    const encryptBtn = document.getElementById('encrypt-btn');
+    const copyBtn = document.getElementById('copy-btn');
+    const issueLink = document.getElementById('issue-link');
+    const outputSection = document.getElementById('output-section');
+    const errorMessage = document.getElementById('error-message');
+    const btnText = encryptBtn.querySelector('.btn-text');
+    const btnLoading = encryptBtn.querySelector('.btn-loading');
+
+    // Fetch public key on load
+    async function fetchPublicKey() {
+      try {
+        const response = await fetch(PUBLIC_KEY_URL);
+        if (!response.ok) throw new Error('Failed to fetch public key');
+        const armoredKey = await response.text();
+        publicKey = await openpgp.readKey({ armoredKey });
+      } catch (err) {
+        showError('Could not load public key. Please try again later.');
+        encryptBtn.disabled = true;
+      }
+    }
+
+    // Encrypt message
+    async function encryptMessage() {
+      const plaintext = plaintextEl.value.trim();
+
+      if (!plaintext) {
+        showError('Please enter a message to encrypt.');
+        return;
+      }
+
+      if (!publicKey) {
+        showError('Public key not loaded. Please refresh the page.');
+        return;
+      }
+
+      // Show loading state
+      btnText.hidden = true;
+      btnLoading.hidden = false;
+      encryptBtn.disabled = true;
+      hideError();
+
+      try {
+        const encrypted = await openpgp.encrypt({
+          message: await openpgp.createMessage({ text: plaintext }),
+          encryptionKeys: publicKey
+        });
+
+        ciphertextEl.value = encrypted;
+        outputSection.hidden = false;
+
+        // Update issue link
+        const issueBody = encodeURIComponent(encrypted);
+        issueLink.href = `https://github.com/${REPO_OWNER}/${REPO_NAME}/issues/new?body=${issueBody}`;
+
+      } catch (err) {
+        showError('Encryption failed. Please try again.');
+        console.error(err);
+      } finally {
+        btnText.hidden = false;
+        btnLoading.hidden = true;
+        encryptBtn.disabled = false;
+      }
+    }
+
+    // Copy to clipboard
+    async function copyToClipboard() {
+      try {
+        await navigator.clipboard.writeText(ciphertextEl.value);
+        const originalText = copyBtn.textContent;
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => {
+          copyBtn.textContent = originalText;
+        }, 2000);
+      } catch (err) {
+        // Fallback for older browsers
+        ciphertextEl.select();
+        document.execCommand('copy');
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => {
+          copyBtn.textContent = 'Copy';
+        }, 2000);
+      }
+    }
+
+    // Error handling
+    function showError(msg) {
+      errorMessage.textContent = msg;
+      errorMessage.hidden = false;
+    }
+
+    function hideError() {
+      errorMessage.hidden = true;
+    }
+
+    // Event listeners
+    encryptBtn.addEventListener('click', encryptMessage);
+    copyBtn.addEventListener('click', copyToClipboard);
+    plaintextEl.addEventListener('input', hideError);
+
+    // Allow Ctrl+Enter to encrypt
+    plaintextEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        encryptMessage();
+      }
+    });
+
+    // Initialize
+    fetchPublicKey();
+  </script>
+</body>
+</html>
