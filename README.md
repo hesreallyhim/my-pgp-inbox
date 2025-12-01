@@ -48,13 +48,13 @@
 <br>
 
 <p align="center">
-<a href="https://github.com/hesreallyhim.gpg">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Download_Key-e0e0e0?style=flat-square&labelColor=1a1a1a">
-  <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Download_Key-222222?style=flat-square">
-  <img src="https://img.shields.io/badge/Download_Key-222222?style=flat-square" alt="Download Key"/>
-</picture>
-</a>
+  <a href="https://github.com/hesreallyhim.gpg">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/download-key-btn-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./assets/download-key-btn.svg">
+      <img src="./assets/download-key-btn.svg" alt="Download Key" height="40">
+    </picture>
+  </a>
 </p>
 
 <br>
