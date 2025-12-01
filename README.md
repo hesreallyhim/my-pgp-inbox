@@ -127,3 +127,13 @@ Unencrypted issues are automatically closed.
 <p align="center">
 <sub><i>No amount of violence will ever solve a math problem.</i></sub>
 </p>
+
+<br>
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/footer-lock-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/footer-lock.svg">
+    <img src="./assets/footer-lock.svg" alt="" height="30">
+  </picture>
+</p>
