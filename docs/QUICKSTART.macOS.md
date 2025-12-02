@@ -9,7 +9,7 @@ By the end of this guide, you'll be able to sign your Git commits (showing a "Ve
 Download and install [GPG Suite](https://gpgtools.org/). This extremely reliable and convenient application gives you GPG tools, a visual key manager, and Keychain integration so macOS remembers your passphrase.
 
 >[!Tip]
-GPG Keychain enables a _very_ frictionless PGP experience - most standard operations can be done straight from the Quick Actions menu.
+>GPG Keychain enables a _very_ frictionless PGP experience - most standard operations can be done straight from the Quick Actions menu.
 
 ## Step 2: Create Your Key
 

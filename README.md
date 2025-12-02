@@ -53,7 +53,7 @@
 
 <br>
 
-**New to PGP?** See the [setup guide](./GPG-GUIDE.md) — takes about 5 minutes.
+**New to PGP?** See the [setup guide](./docs/QUICKSTART.md) — it only takes about 5 minutes.
 
 <br>
 
