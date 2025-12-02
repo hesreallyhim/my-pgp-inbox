@@ -8,15 +8,18 @@ By the end of this guide, you'll be able to sign your Git commits (showing a "Ve
 
 Download and install [GPG Suite](https://gpgtools.org/). This extremely reliable and convenient application gives you GPG tools, a visual key manager, and Keychain integration so macOS remembers your passphrase.
 
+>[!Tip]
+GPG Keychain enables a _very_ frictionless PGP experience - most standard operations can be done straight from the Quick Actions menu.
+
 ## Step 2: Create Your Key
 
-1. Open **GPG Keychain** (installed with GPG Suite)
+1. Open **GPG Keychain** (installed with [GPG Suite](https://gpgtools.org/))
 2. Click **New** in the top-left
 3. Enter your name and email address
 4. Choose a strong passphrase and click **Generate Key**
 
 >[!Note]
->Your email will be visible on your public key and in your commits. If this concerns you, use a dedicated email address solely for GitHub activity, or simply use GitHub's `noreply` private email address for your account when creating your key.
+>Your email will be visible on your public key and in your commits. If this concerns you, use a dedicated email address solely for GitHub activity (or simply use your GitHub `noreply` address, but note that this enables commit-signing, but not private two-way communications).
 
 ## Step 3: Add Your Key to GitHub
 
@@ -40,10 +43,10 @@ git config --global user.signingkey YOUR_KEY_ID
 git config --global commit.gpgsign true
 ```
 
-Make a test commit - you should now see the green **Verified** badge on GitHub (or run `git log --show-signature` locally to verify).
+Make a test commit - you should now see the green **Verified** badge on GitHub (or run `git log --show-signature` to verify locally).
 
 >[!Tip]
->For even stronger protection, once you're in the habit of signing your commits (which requires almost no effort after initial setup), you may choose to enable "Vigilant Mode" (under "SSH and GPG keys") to flag any unsigned commits that are attributed you as "Unverified" - this helps you quickly spot if someone is trying to spoof your identity in commit messages.
+>Once you’re consistently signing commits, enabling GitHub’s Vigilant Mode helps detect if anyone tries to attribute unsigned commits to you.
 
 ## Step 5: Publish Your Key to a Keyserver
 
@@ -52,17 +55,16 @@ This lets others find your public key so they can send you encrypted messages (o
 1. In GPG Keychain, right-click your key
 2. Select **Send Public Key to Key Server**
 
-Your key is now published to `keys.openpgp.org`. You'll receive a verification email - click the link to complete publishing. This ties your key to your email address so no one can impersonate your identity.
+Most GPG Suite installations send keys to [keys.openpgp.org](https://keys.openpgp.org/), which will email you a verification link. This publicly ties your key to your email address.
 
 ## Step 6: Import Someone Else's Key
 
 To send an encrypted message to someone, you need their public key.
 
-1. GitHub publishes keys at `https://github.com/<username>.gpg` - download or copy from there (the whole block of text)
-2. In GPG Keychain, go to **File → Import** and select the file (or **Edit → Import from Clipboard** if you copied it)
-3. Alternatively, you can do it all without leaving your browser - just highlight the whole public key text, right click → "Import key from selection" and you're done!
+1. GitHub exposes keys at `https://github.com/<username>.gpg` - download or copy from there (the whole block of text)
+2. In GPG Keychain, you can: (i) go to **File → Import** and select the file you downloaded; (ii) select **Edit → Import from Clipboard** if you copied it; or, if available, (iii) highlight the key, right-click, and use the Quick Action "Import from Collection" (so easy!).
 
-Their key now appears in GPG Keychain, which you can also connenct to your macOS Keychain for maximum ease and protection. Then you can just write your message to me in any text editor → right-click → "Encrypt selection" - and paste the content into an issue. We now have a **completely secure and private way to communicate** right out in the open.
+Their key now appears in GPG Keychain. Then you can just write any text to a text editor → select the text → right-click → "Encrypt Selection" - and paste the content into an issue. We now have a **completely secure and private way to communicate** right out in the open.
 
 ---
 
