@@ -8,47 +8,48 @@
 
 <br>
 
----
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/divider-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/divider.svg">
+    <img src="./assets/divider.svg" alt="" width="100%">
+  </picture>
+</p>
 
 <br>
 
 ## Send an Encrypted Message
 
-<br>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/steps-indicator-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/steps-indicator.svg">
+    <img src="./assets/steps-indicator.svg" alt="Steps: 01 Get Key, 02 Encrypt, 03 Send" width="100%">
+  </picture>
+</p>
 
-<table>
-<thead>
-<tr>
-<th align="center">Step</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>01</code></td>
-<td>Download my <a href="https://github.com/hesreallyhim.gpg">public PGP key</a></td>
-</tr>
-<tr>
-<td align="center"><code>02</code></td>
-<td>Encrypt your message using GPG</td>
-</tr>
-<tr>
-<td align="center"><code>03</code></td>
-<td><a href="../../issues/new">Open an issue</a> with the encrypted text</td>
-</tr>
-</tbody>
-</table>
+<p align="center">
+  <a href="https://github.com/hesreallyhim.gpg">Download key</a> · Encrypt with GPG · <a href="../../issues/new">Open issue</a>
+</p>
 
 <br>
 
 <p align="center">
-<a href="https://github.com/hesreallyhim.gpg">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Download_Key-e0e0e0?style=flat-square&labelColor=1a1a1a">
-  <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Download_Key-222222?style=flat-square">
-  <img src="https://img.shields.io/badge/Download_Key-222222?style=flat-square" alt="Download Key"/>
-</picture>
-</a>
+  <a href="https://github.com/hesreallyhim.gpg">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/download-key-btn-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./assets/download-key-btn.svg">
+      <img src="./assets/download-key-btn.svg" alt="Download Key" height="40">
+    </picture>
+  </a>
+  &nbsp;&nbsp;
+  <a href="../../issues/new">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/new-issue-btn-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./assets/new-issue-btn.svg">
+      <img src="./assets/new-issue-btn.svg" alt="New Issue" height="40">
+    </picture>
+  </a>
 </p>
 
 <br>
@@ -57,7 +58,13 @@
 
 <br>
 
----
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/divider-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/divider.svg">
+    <img src="./assets/divider.svg" alt="" width="100%">
+  </picture>
+</p>
 
 <br>
 
@@ -72,11 +79,7 @@
 </tr>
 <tr>
 <td><b>Mathematically secure</b></td>
-<td>No backdoors, no exceptions</td>
-</tr>
-<tr>
-<td><b>Decentralized</b></td>
-<td>No third-party service required</td>
+<td>No backdoors, no exceptions (not even GitHub)</td>
 </tr>
 <tr>
 <td><b>Verified identity</b></td>
@@ -86,7 +89,13 @@
 
 <br>
 
----
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/divider-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/divider.svg">
+    <img src="./assets/divider.svg" alt="" width="100%">
+  </picture>
+</p>
 
 <br>
 
@@ -96,10 +105,26 @@ Unencrypted issues are automatically closed.
 
 <br>
 
----
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/divider-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/divider.svg">
+    <img src="./assets/divider.svg" alt="" width="100%">
+  </picture>
+</p>
 
 <br>
 
 <p align="center">
 <sub><i>No amount of violence will ever solve a math problem.</i></sub>
+</p>
+
+<br>
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/footer-lock-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/footer-lock.svg">
+    <img src="./assets/footer-lock.svg" alt="" height="30">
+  </picture>
 </p>

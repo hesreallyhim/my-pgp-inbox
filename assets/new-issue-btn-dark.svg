@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 44">
+  <!-- New Issue button (dark mode) -->
+
+  <!-- Button outline -->
+  <rect x="2" y="2" width="136" height="40" fill="none" stroke="#e0e0e0" stroke-width="1" rx="3"/>
+
+  <!-- Icon: plus in circle -->
+  <g transform="translate(24, 22)">
+    <circle cx="0" cy="0" r="8" fill="none" stroke="#e0e0e0" stroke-width="1.5"/>
+    <line x1="-4" y1="0" x2="4" y2="0" stroke="#e0e0e0" stroke-width="1.5"/>
+    <line x1="0" y1="-4" x2="0" y2="4" stroke="#e0e0e0" stroke-width="1.5"/>
+  </g>
+
+  <!-- Button text -->
+  <text x="82" y="26" font-family="Helvetica Neue, Arial, sans-serif" font-size="13" fill="#e0e0e0" font-weight="400" letter-spacing="0.5" text-anchor="middle">New Issue</text>
+</svg>
