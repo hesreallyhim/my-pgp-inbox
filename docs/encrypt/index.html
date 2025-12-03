@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encrypt Message</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="lock-icon">
+        <svg viewBox="0 0 40 50" width="32" height="40">
+          <rect x="5" y="22" width="30" height="24" fill="none" stroke="currentColor" stroke-width="2" rx="3"/>
+          <path d="M12,22 L12,12 Q12,2 20,2 Q28,2 28,12 L28,22" fill="none" stroke="currentColor" stroke-width="2"/>
+          <circle cx="20" cy="32" r="3" fill="currentColor"/>
+          <line x1="20" y1="35" x2="20" y2="40" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </div>
+      <h1>Encrypt Message</h1>
+      <p class="subtitle">Client-side PGP encryption</p>
+    </header>
+
+    <main>
+      <div class="input-section">
+        <label for="plaintext">Your message</label>
+        <textarea id="plaintext" placeholder="Type your message here..." rows="6"></textarea>
+      </div>
+
+      <button id="encrypt-btn" class="primary-btn">
+        <span class="btn-text">Encrypt</span>
+        <span class="btn-loading" hidden>Encrypting...</span>
+      </button>
+
+      <div id="output-section" class="output-section" hidden>
+        <label for="ciphertext">Encrypted message</label>
+        <textarea id="ciphertext" readonly rows="8"></textarea>
+
+        <div class="button-row">
+          <button id="copy-btn" class="secondary-btn">Copy</button>
+          <a id="issue-link" class="secondary-btn" target="_blank">Open Issue</a>
+        </div>
+      </div>
+
+      <div id="error-message" class="error-message" hidden></div>
+    </main>
+
+    <footer>
+      <p class="disclaimer">
+        This is a lightweight tool for casual private messages.<br>
+        For high-risk communications, use a local GPG client.
+      </p>
+      <p class="info">
+        Encryption happens entirely in your browser.<br>
+        Your message never leaves your device.
+      </p>
+      <p class="info">
+        The OpenPGP library is self-hosted in this repo and pinned with Subresource Integrity (SRI).<br>
+        SRI makes the browser hash-check the script (`sha384-WpBP4SaUVolOFkq/8kIzD3g7GLGROT9sB1GK17YILwH7B8wqlpDMosPKbdRD4xjt`); if it ever differs, it will refuse to run.
+      </p>
+      <a href="https://github.com/hesreallyhim/my-pgp-inbox" class="back-link">&larr; Back to repository</a>
+    </footer>
+  </div>
+
+  <script
+    src="openpgp.min.js"
+    integrity="sha384-WpBP4SaUVolOFkq/8kIzD3g7GLGROT9sB1GK17YILwH7B8wqlpDMosPKbdRD4xjt"
+    crossorigin="anonymous"></script>
+  <script>
+    const REPO_OWNER = 'hesreallyhim';
+    const REPO_NAME = 'my-pgp-inbox';
+    const ISSUE_URL = `https://github.com/${REPO_OWNER}/${REPO_NAME}/issues/new`;
+    const EMBEDDED_PUBLIC_KEY = `-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+fmzwdkmqAa8NvqYHaYxpYA==
+=hbL4
+-----END PGP PUBLIC KEY BLOCK-----`;
+    const EXPECTED_FINGERPRINT = '981B3FD2EC4196BE2BF869F3C27DD4CA8AA8F22B';
+
+    let publicKey = null;
+
+    // Elements
+    const plaintextEl = document.getElementById('plaintext');
+    const ciphertextEl = document.getElementById('ciphertext');
+    const encryptBtn = document.getElementById('encrypt-btn');
+    const copyBtn = document.getElementById('copy-btn');
+    const issueLink = document.getElementById('issue-link');
+    const outputSection = document.getElementById('output-section');
+    const errorMessage = document.getElementById('error-message');
+    const btnText = encryptBtn.querySelector('.btn-text');
+    const btnLoading = encryptBtn.querySelector('.btn-loading');
+
+    function normalizeFingerprint(fp) {
+      return fp.replace(/\s+/g, '').toUpperCase();
+    }
+
+    // Load and verify public key fingerprint
+    async function loadPublicKey() {
+      try {
+        const key = await openpgp.readKey({ armoredKey: EMBEDDED_PUBLIC_KEY });
+        const fingerprint = normalizeFingerprint(key.getFingerprint());
+        if (fingerprint !== normalizeFingerprint(EXPECTED_FINGERPRINT)) {
+          throw new Error('Fingerprint mismatch');
+        }
+        publicKey = key;
+      } catch (err) {
+        showError('Could not load public key. Please try again later.');
+        encryptBtn.disabled = true;
+        console.error(err);
+      }
+    }
+
+    // Encrypt message
+    async function encryptMessage() {
+      const plaintext = plaintextEl.value.trim();
+
+      if (!plaintext) {
+        showError('Please enter a message to encrypt.');
+        return;
+      }
+
+      if (!publicKey) {
+        showError('Public key not loaded. Please refresh the page.');
+        return;
+      }
+
+      // Show loading state
+      btnText.hidden = true;
+      btnLoading.hidden = false;
+      encryptBtn.disabled = true;
+      hideError();
+
+      try {
+        const encrypted = await openpgp.encrypt({
+          message: await openpgp.createMessage({ text: plaintext }),
+          encryptionKeys: publicKey
+        });
+
+        ciphertextEl.value = encrypted;
+        outputSection.hidden = false;
+      } catch (err) {
+        showError('Encryption failed. Please try again.');
+        console.error(err);
+      } finally {
+        btnText.hidden = false;
+        btnLoading.hidden = true;
+        encryptBtn.disabled = false;
+      }
+    }
+
+    // Copy to clipboard
+    async function copyToClipboard() {
+      try {
+        await navigator.clipboard.writeText(ciphertextEl.value);
+        const originalText = copyBtn.textContent;
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => {
+          copyBtn.textContent = originalText;
+        }, 2000);
+      } catch (err) {
+        // Fallback for older browsers
+        ciphertextEl.select();
+        document.execCommand('copy');
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => {
+          copyBtn.textContent = 'Copy';
+        }, 2000);
+      }
+    }
+
+    // Error handling
+    function showError(msg) {
+      errorMessage.textContent = msg;
+      errorMessage.hidden = false;
+    }
+
+    function hideError() {
+      errorMessage.hidden = true;
+    }
+
+    function selectCiphertext() {
+      ciphertextEl.focus();
+      ciphertextEl.select();
+    }
+
+    // Event listeners
+    encryptBtn.addEventListener('click', encryptMessage);
+    copyBtn.addEventListener('click', copyToClipboard);
+    ciphertextEl.addEventListener('click', selectCiphertext);
+    ciphertextEl.addEventListener('focus', selectCiphertext);
+    plaintextEl.addEventListener('input', hideError);
+
+    // Allow Ctrl+Enter to encrypt
+    plaintextEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        encryptMessage();
+      }
+    });
+
+    // Initialize
+    issueLink.href = ISSUE_URL;
+    loadPublicKey();
+  </script>
+</body>
+</html>

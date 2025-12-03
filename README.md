@@ -128,3 +128,7 @@ Unencrypted issues are automatically closed.
     <img src="./assets/footer-lock.svg" alt="" height="30">
   </picture>
 </p>
+
+## Licenses
+
+- `docs/encrypt/openpgp.min.js` is OpenPGP.js v5.11.0 (unmodified) under LGPL-3.0-or-later. See `docs/encrypt/OPENPGPJS-LICENSE`.
