@@ -3,7 +3,7 @@
 :root {
   --bg: #fafafa;
   --text: #222;
-  --text-muted: #555;
+  --text-muted: #888;
   --border: #ddd;
   --border-focus: #222;
   --error: #c44;
@@ -13,7 +13,7 @@
   :root {
     --bg: #1a1a1a;
     --text: #e0e0e0;
-    --text-muted: #aaa;
+    --text-muted: #666;
     --border: #333;
     --border-focus: #e0e0e0;
     --error: #e66;
