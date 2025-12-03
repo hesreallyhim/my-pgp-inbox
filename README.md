@@ -54,7 +54,7 @@
 
 <br>
 
-**New to PGP?** See the [setup guide](./GPG-GUIDE.md) — takes about 5 minutes.
+**New to PGP?** See the [setup guide](./docs/QUICKSTART.md) — it only takes about 5 minutes.
 
 <br>
 
@@ -79,11 +79,7 @@
 </tr>
 <tr>
 <td><b>Mathematically secure</b></td>
-<td>No backdoors, no exceptions</td>
-</tr>
-<tr>
-<td><b>Decentralized</b></td>
-<td>No third-party service required</td>
+<td>No backdoors, no exceptions (not even GitHub)</td>
 </tr>
 <tr>
 <td><b>Verified identity</b></td>
