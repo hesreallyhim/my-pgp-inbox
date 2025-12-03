@@ -28,32 +28,39 @@
   </picture>
 </p>
 
-<p align="center">
-  <a href="https://github.com/hesreallyhim.gpg">Download key</a> · Encrypt with GPG · <a href="../../issues/new">Open issue</a>
-</p>
-
-<br>
-
-<div align="center">
-<span align="center">
-  <span>
-    <a href="https://github.com/hesreallyhim.gpg">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="./assets/download-key-btn-dark.svg">
-        <source media="(prefers-color-scheme: light)" srcset="./assets/download-key-btn.svg">
-        <img src="./assets/download-key-btn.svg" alt="Download Key" width="200" height="40">
-      </picture>
-    </a>
-  </span>&nbsp;&nbsp;<span>
-    <a href="../../issues/new">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="./assets/new-issue-btn-dark.svg">
-        <source media="(prefers-color-scheme: light)" srcset="./assets/new-issue-btn.svg">
-        <img src="./assets/new-issue-btn.svg" alt="New Issue" width="200" height="40">
-      </picture>
-    </a>
-  </span>
-</span></div>
+<table align="center" role="presentation">
+  <tr>
+    <td align="center" width="200">
+      <a href="https://github.com/hesreallyhim.gpg">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="./assets/download-key-btn-dark.svg">
+          <source media="(prefers-color-scheme: light)" srcset="./assets/download-key-btn.svg">
+          <img src="./assets/download-key-btn.svg" alt="Download Key" width="200" height="40">
+        </picture>
+      </a>
+    </td>
+    <td width="24"></td>
+    <td align="center" width="200">
+      <a href="./docs/encrypt/">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="./assets/gpg-encrypt-btn-dark.svg">
+          <source media="(prefers-color-scheme: light)" srcset="./assets/gpg-encrypt-btn.svg">
+          <img src="./assets/gpg-encrypt-btn.svg" alt="GPG Encrypt" width="200" height="40">
+        </picture>
+      </a>
+    </td>
+    <td width="24"></td>
+    <td align="center" width="200">
+      <a href="../../issues/new">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="./assets/new-issue-btn-dark.svg">
+          <source media="(prefers-color-scheme: light)" srcset="./assets/new-issue-btn.svg">
+          <img src="./assets/new-issue-btn.svg" alt="New Issue" width="200" height="40">
+        </picture>
+      </a>
+    </td>
+  </tr>
+</table>
 
 <br>
 
