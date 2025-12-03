@@ -34,23 +34,29 @@
 
 <br>
 
-<p align="center">
-  <a href="https://github.com/hesreallyhim.gpg">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./assets/download-key-btn-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="./assets/download-key-btn.svg">
-      <img src="./assets/download-key-btn.svg" alt="Download Key" width="200" height="40">
-    </picture>
-  </a>
-  &nbsp;&nbsp;
-  <a href="../../issues/new">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./assets/new-issue-btn-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="./assets/new-issue-btn.svg">
-      <img src="./assets/new-issue-btn.svg" alt="New Issue" width="200" height="40">
-    </picture>
-  </a>
-</p>
+<table align="center" role="presentation">
+  <tr>
+    <td align="center" width="200">
+      <a href="https://github.com/hesreallyhim.gpg">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="./assets/download-key-btn-dark.svg">
+          <source media="(prefers-color-scheme: light)" srcset="./assets/download-key-btn.svg">
+          <img src="./assets/download-key-btn.svg" alt="Download Key" width="200" height="40">
+        </picture>
+      </a>
+    </td>
+    <td width="20"></td>
+    <td align="center" width="200">
+      <a href="../../issues/new">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="./assets/new-issue-btn-dark.svg">
+          <source media="(prefers-color-scheme: light)" srcset="./assets/new-issue-btn.svg">
+          <img src="./assets/new-issue-btn.svg" alt="New Issue" width="200" height="40">
+        </picture>
+      </a>
+    </td>
+  </tr>
+</table>
 
 <br>
 
