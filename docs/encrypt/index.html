@@ -54,11 +54,18 @@
         Encryption happens entirely in your browser.<br>
         Your message never leaves your device.
       </p>
+      <p class="info">
+        The OpenPGP library is self-hosted in this repo and pinned with Subresource Integrity (SRI).<br>
+        SRI makes the browser hash-check the script (`sha384-WpBP4SaUVolOFkq/8kIzD3g7GLGROT9sB1GK17YILwH7B8wqlpDMosPKbdRD4xjt`); if it ever differs, it will refuse to run.
+      </p>
       <a href="https://github.com/hesreallyhim/my-pgp-inbox" class="back-link">&larr; Back to repository</a>
     </footer>
   </div>
 
-  <script src="openpgp.min.js"></script>
+  <script
+    src="openpgp.min.js"
+    integrity="sha384-WpBP4SaUVolOFkq/8kIzD3g7GLGROT9sB1GK17YILwH7B8wqlpDMosPKbdRD4xjt"
+    crossorigin="anonymous"></script>
   <script>
     const REPO_OWNER = 'hesreallyhim';
     const REPO_NAME = 'my-pgp-inbox';
