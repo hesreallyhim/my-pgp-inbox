@@ -35,19 +35,19 @@
 <br>
 
 <p align="center">
-  <a href="https://github.com/hesreallyhim.gpg">
-    <picture style="display:inline-block; width:200px; height:40px;">
+  <a href="https://github.com/hesreallyhim.gpg" style="display:inline-block; width:200px; height:40px;">
+    <picture>
       <source media="(prefers-color-scheme: dark)" srcset="./assets/download-key-btn-dark.svg">
       <source media="(prefers-color-scheme: light)" srcset="./assets/download-key-btn.svg">
-      <img src="./assets/download-key-btn.svg" alt="Download Key" style="width:100%; height:100%; object-fit: contain;">
+      <img src="./assets/download-key-btn.svg" alt="Download Key" style="width:100%; height:100%; object-fit: contain; display:block;">
     </picture>
   </a>
   &nbsp;&nbsp;
-  <a href="../../issues/new">
-    <picture style="display:inline-block; width:200px; height:40px;">
+  <a href="../../issues/new" style="display:inline-block; width:200px; height:40px;">
+    <picture>
       <source media="(prefers-color-scheme: dark)" srcset="./assets/new-issue-btn-dark.svg">
       <source media="(prefers-color-scheme: light)" srcset="./assets/new-issue-btn.svg">
-      <img src="./assets/new-issue-btn.svg" alt="New Issue" style="width:100%; height:100%; object-fit: contain;">
+      <img src="./assets/new-issue-btn.svg" alt="New Issue" style="width:100%; height:100%; object-fit: contain; display:block;">
     </picture>
   </a>
 </p>
