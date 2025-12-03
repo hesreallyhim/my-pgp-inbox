@@ -225,9 +225,16 @@ fmzwdkmqAa8NvqYHaYxpYA==
       errorMessage.hidden = true;
     }
 
+    function selectCiphertext() {
+      ciphertextEl.focus();
+      ciphertextEl.select();
+    }
+
     // Event listeners
     encryptBtn.addEventListener('click', encryptMessage);
     copyBtn.addEventListener('click', copyToClipboard);
+    ciphertextEl.addEventListener('click', selectCiphertext);
+    ciphertextEl.addEventListener('focus', selectCiphertext);
     plaintextEl.addEventListener('input', hideError);
 
     // Allow Ctrl+Enter to encrypt
