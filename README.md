@@ -20,38 +20,36 @@
 
 ## Send an Encrypted Message
 
-<div align="center">
-<span align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/steps-indicator-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="./assets/steps-indicator.svg">
-    <img src="./assets/steps-indicator.svg" alt="Steps: 01 Get Key, 02 Encrypt, 03 Send" width="100%">
-  </picture>
-  </span>
-</div>
-
 <p align="center">
   <a href="https://github.com/hesreallyhim.gpg">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./assets/download-key-btn-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="./assets/download-key-btn.svg">
-      <img src="./assets/download-key-btn.svg" alt="Download Key" height="44">
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/step-01-getkey-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./assets/step-01-getkey.svg">
+      <img src="./assets/step-01-getkey.svg" alt="01 Get Key" width="16%">
     </picture>
   </a>
-  &nbsp;&nbsp;
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/step-arrow-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/step-arrow.svg">
+    <img src="./assets/step-arrow.svg" alt="" width="9%">
+  </picture>
   <a href="./docs/encrypt/">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./assets/gpg-encrypt-btn-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="./assets/gpg-encrypt-btn.svg">
-      <img src="./assets/gpg-encrypt-btn.svg" alt="GPG Encrypt" height="44">
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/step-02-encrypt-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./assets/step-02-encrypt.svg">
+      <img src="./assets/step-02-encrypt.svg" alt="02 Encrypt" width="16%">
     </picture>
   </a>
-  &nbsp;&nbsp;
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/step-arrow-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/step-arrow.svg">
+    <img src="./assets/step-arrow.svg" alt="" width="9%">
+  </picture>
   <a href="../../issues/new">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./assets/new-issue-btn-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="./assets/new-issue-btn.svg">
-      <img src="./assets/new-issue-btn.svg" alt="New Issue" height="44">
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/step-03-send-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./assets/step-03-send.svg">
+      <img src="./assets/step-03-send.svg" alt="03 Send" width="16%">
     </picture>
   </a>
 </p>
