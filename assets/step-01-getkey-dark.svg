@@ -1,12 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 95">
   <!-- Step 1: Get Key (dark mode) -->
 
-  <!-- Key shape -->
+  <!-- Key shape with subtle rotation animation -->
   <g transform="translate(50, 35)">
-    <circle cx="0" cy="0" r="8" fill="none" stroke="#e0e0e0" stroke-width="1.5"/>
-    <line x1="8" y1="0" x2="22" y2="0" stroke="#e0e0e0" stroke-width="1.5"/>
-    <line x1="18" y1="0" x2="18" y2="5" stroke="#e0e0e0" stroke-width="1.5"/>
-    <line x1="22" y1="0" x2="22" y2="5" stroke="#e0e0e0" stroke-width="1.5"/>
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="0;8;0;-8;0" dur="4s" repeatCount="indefinite"/>
+      <circle cx="0" cy="0" r="8" fill="none" stroke="#e0e0e0" stroke-width="1.5"/>
+      <line x1="8" y1="0" x2="22" y2="0" stroke="#e0e0e0" stroke-width="1.5"/>
+      <line x1="18" y1="0" x2="18" y2="5" stroke="#e0e0e0" stroke-width="1.5"/>
+      <line x1="22" y1="0" x2="22" y2="5" stroke="#e0e0e0" stroke-width="1.5"/>
+    </g>
   </g>
 
   <!-- Text -->
