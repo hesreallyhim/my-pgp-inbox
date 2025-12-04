@@ -1,12 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 95">
   <!-- Step 1: Get Key (dark mode) -->
 
-  <!-- Key shape -->
+  <!-- Key shape with 3D-style rotation around horizontal axis (teeth turning) -->
   <g transform="translate(50, 35)">
-    <circle cx="0" cy="0" r="8" fill="none" stroke="#e0e0e0" stroke-width="1.5"/>
+    <!-- Key head (circle) - stays mostly stable but squishes slightly -->
+    <ellipse cx="0" cy="0" rx="8" fill="none" stroke="#e0e0e0" stroke-width="1.5">
+      <animate attributeName="ry" values="8;8;6;8;8" dur="3s" repeatCount="indefinite"/>
+    </ellipse>
+
+    <!-- Key shaft - stable -->
     <line x1="8" y1="0" x2="22" y2="0" stroke="#e0e0e0" stroke-width="1.5"/>
-    <line x1="18" y1="0" x2="18" y2="5" stroke="#e0e0e0" stroke-width="1.5"/>
-    <line x1="22" y1="0" x2="22" y2="5" stroke="#e0e0e0" stroke-width="1.5"/>
+
+    <!-- Key teeth - animate to simulate rotation around shaft -->
+    <g>
+      <animateTransform attributeName="transform" type="scale" values="1,1; 1,1; 1,0.8; 1,0.5; 1,0.8; 1,1; 1,1" dur="3s" repeatCount="indefinite"/>
+      <line x1="18" y1="0" x2="18" y2="5" stroke="#e0e0e0" stroke-width="1.5"/>
+      <line x1="22" y1="0" x2="22" y2="5" stroke="#e0e0e0" stroke-width="1.5"/>
+    </g>
   </g>
 
   <!-- Text -->

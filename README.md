@@ -35,7 +35,7 @@
     <source media="(prefers-color-scheme: light)" srcset="./assets/step-arrow.svg">
     <img src="./assets/step-arrow.svg" alt="" width="9%">
   </picture>
-  <a href="./docs/encrypt/">
+  <a href="https://hesreallyhim.github.io/my-pgp-inbox/">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="./assets/step-02-encrypt-dark.svg">
       <source media="(prefers-color-scheme: light)" srcset="./assets/step-02-encrypt.svg">
@@ -47,7 +47,7 @@
     <source media="(prefers-color-scheme: light)" srcset="./assets/step-arrow.svg">
     <img src="./assets/step-arrow.svg" alt="" width="9%">
   </picture>
-  <a href="../../issues/new">
+  <a href="https://github.com/hesreallyhim/my-pgp-inbox/issues/new">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="./assets/step-03-send-dark.svg">
       <source media="(prefers-color-scheme: light)" srcset="./assets/step-03-send.svg">
@@ -79,7 +79,7 @@
 
 <div align="center">
 
-### The crazy thing is: ***no one even knows how it works!***[^*]
+### The crazy thing is: ***no one even knows how it works!***[^1]
 
 </div>
 
@@ -89,6 +89,7 @@
 
 ### **Want to know more?** See the [setup guide](./docs/QUICKSTART.md) — it only takes about 5 minutes.
 
+### **In a hurry?** You can visit [this page](https://hesreallyhim.github.io/my-pgp-inbox/) to create an encryped message right from your browser.
 </div>
 
 <br>
@@ -122,7 +123,7 @@
 
 </div>
 
-<table>
+<table align="center">
 <tr>
 <td width="200"><b>End-to-end encryption</b></td>
 <td>Only I can read your message</td>
@@ -149,8 +150,8 @@
 
 <br />
 
->[!Warn]
->PGP encryption is very strong - it is used by journalists, activists, and security professionals all over the world. However, this particular repo is **not** an appropriate platform for sending highly sensitive information, and it's not designed with that purpose in mind. 
+> [!CAUTION]
+> PGP encryption is very strong - it is used by journalists, activists, and security professionals all over the world. However, this particular repo is **not** an appropriate platform for sending highly sensitive information, and it's not designed with that purpose in mind. 
 
 <br />
 
@@ -180,4 +181,4 @@ No amount of coercive force will ever solve a math problem."</i>
 
 See [LICENSE](./LICENSE) for license information.
 
-[^*]: That's just a joke.
+[^*]: That's not true.  
