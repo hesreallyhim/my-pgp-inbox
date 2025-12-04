@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55 95">
+  <!-- Arrow connector (dark mode) -->
+  <g transform="translate(8, 35)">
+    <line x1="0" y1="0" x2="35" y2="0" stroke="#333" stroke-width="1"/>
+    <polyline points="30,-4 38,0 30,4" fill="none" stroke="#333" stroke-width="1"/>
+  </g>
+</svg>

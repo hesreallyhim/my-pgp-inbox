@@ -18,45 +18,78 @@
 
 <br>
 
-## Send an Encrypted Message
+<h2 align="center">Send an Encrypted Message</h2>
+
+<h3 align="center">To <em>send</em> an encrypted message, all you need is <em>my</em> public PGP key...</h3>
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/steps-indicator-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="./assets/steps-indicator.svg">
-    <img src="./assets/steps-indicator.svg" alt="Steps: 01 Get Key, 02 Encrypt, 03 Send" width="100%">
-  </picture>
-</p>
-
-<div align="center">
-<span align="center">
   <a href="https://github.com/hesreallyhim.gpg">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./assets/download-key-btn-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="./assets/download-key-btn.svg">
-      <img src="./assets/download-key-btn.svg" alt="Download Key" width="200" height="40">
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/step-01-getkey-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./assets/step-01-getkey.svg">
+      <img src="./assets/step-01-getkey.svg" alt="01 Get Key" width="16%">
     </picture>
   </a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/step-arrow-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/step-arrow.svg">
+    <img src="./assets/step-arrow.svg" alt="" width="9%">
+  </picture>
   <a href="./docs/encrypt/">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./assets/gpg-encrypt-btn-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="./assets/gpg-encrypt-btn.svg">
-      <img src="./assets/gpg-encrypt-btn.svg" alt="GPG Encrypt" width="200" height="40">
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/step-02-encrypt-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./assets/step-02-encrypt.svg">
+      <img src="./assets/step-02-encrypt.svg" alt="02 Encrypt" width="16%">
     </picture>
   </a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/step-arrow-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/step-arrow.svg">
+    <img src="./assets/step-arrow.svg" alt="" width="9%">
+  </picture>
   <a href="../../issues/new">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./assets/new-issue-btn-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="./assets/new-issue-btn.svg">
-      <img src="./assets/new-issue-btn.svg" alt="New Issue" width="200" height="40">
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/step-03-send-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./assets/step-03-send.svg">
+      <img src="./assets/step-03-send.svg" alt="03 Send" width="16%">
     </picture>
   </a>
-  </span>
-  </div>
+</p>
 
-<br>
+<h3 align="center">If you want my <em>reply</em> to be encrypted, all you need is to share <em>your</em> public PGP key...</h3>
 
-**New to PGP?** See the [setup guide](./docs/QUICKSTART.md) — it only takes about 5 minutes.
+<table align="center">
+<tr>
+<td width="200"><b>Public Key</b></td>
+<td>Lets others send messages that only <em>you</em> can read</td>
+</tr>
+<tr>
+<td><b>Private Key</b></td>
+<td>Lets <em>you</em> read messages that no one <em>else</em> can read</td>
+</tr>
+</table>
+
+<br />
+
+<div align="center">
+
+## Isn't that ***amazing?***
+
+</div>
+
+<div align="center">
+
+### The crazy thing is: ***no one even knows how it works!***[^*]
+
+</div>
+
+
+
+<div align="center">
+
+### **Want to know more?** See the [setup guide](./docs/QUICKSTART.md) — it only takes about 5 minutes.
+
+</div>
 
 <br>
 
@@ -68,11 +101,26 @@
   </picture>
 </p>
 
+<h3 align="center">
+<i>"Cryptography is the ultimate form of non-violent direct action."</i>
+</h3>
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/footer-lock-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/footer-lock.svg">
+    <img src="./assets/footer-lock.svg" alt="padlock" height="30">
+  </picture>
+</p>
+
 <br>
+<div align="center">
 
 ## Why PGP?
 
-<br>
+<br />
+
+</div>
 
 <table>
 <tr>
@@ -99,13 +147,12 @@
   </picture>
 </p>
 
-<br>
+<br />
 
-## Policy
+>[!Warn]
+>PGP encryption is very strong - it is used by journalists, activists, and security professionals all over the world. However, this particular repo is **not** an appropriate platform for sending highly sensitive information, and it's not designed with that purpose in mind. 
 
-Unencrypted issues are automatically closed.
-
-<br>
+<br />
 
 <p align="center">
   <picture>
@@ -115,22 +162,22 @@ Unencrypted issues are automatically closed.
   </picture>
 </p>
 
-<br>
+<h3 align="center">
+<i>"Strong cryptography can resist an unlimited application of violence.
 
-<p align="center">
-<sub><i>No amount of violence will ever solve a math problem.</i></sub>
-</p>
-
-<br>
+No amount of coercive force will ever solve a math problem."</i>
+</h3>
 
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./assets/footer-lock-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="./assets/footer-lock.svg">
-    <img src="./assets/footer-lock.svg" alt="" height="30">
+    <img src="./assets/footer-lock.svg" alt="padlock" height="30">
   </picture>
 </p>
 
 ## Licenses
 
-- `docs/encrypt/openpgp.min.js` is OpenPGP.js v5.11.0 (unmodified) under LGPL-3.0-or-later. See `docs/encrypt/OPENPGPJS-LICENSE`.
+See [LICENSE](./LICENSE) for license information.
+
+[^*]: That's just a joke.
