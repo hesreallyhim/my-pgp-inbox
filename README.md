@@ -20,13 +20,15 @@
 
 ## Send an Encrypted Message
 
-<p align="center">
+<div align="center">
+<span align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./assets/steps-indicator-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="./assets/steps-indicator.svg">
     <img src="./assets/steps-indicator.svg" alt="Steps: 01 Get Key, 02 Encrypt, 03 Send" width="100%">
   </picture>
-</p>
+  </span>
+</div>
 
 <div align="center">
 <span align="center">
@@ -34,21 +36,21 @@
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="./assets/download-key-btn-dark.svg">
       <source media="(prefers-color-scheme: light)" srcset="./assets/download-key-btn.svg">
-      <img src="./assets/download-key-btn.svg" alt="Download Key" width="200" height="40">
+      <img src="./assets/download-key-btn.svg" alt="Download Key" height="44">
     </picture>
   </a>
   <a href="./docs/encrypt/">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="./assets/gpg-encrypt-btn-dark.svg">
       <source media="(prefers-color-scheme: light)" srcset="./assets/gpg-encrypt-btn.svg">
-      <img src="./assets/gpg-encrypt-btn.svg" alt="GPG Encrypt" width="200" height="40">
+      <img src="./assets/gpg-encrypt-btn.svg" alt="GPG Encrypt" height="44">
     </picture>
   </a>
   <a href="../../issues/new">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="./assets/new-issue-btn-dark.svg">
       <source media="(prefers-color-scheme: light)" srcset="./assets/new-issue-btn.svg">
-      <img src="./assets/new-issue-btn.svg" alt="New Issue" width="200" height="40">
+      <img src="./assets/new-issue-btn.svg" alt="New Issue" height="44">
     </picture>
   </a>
   </span>

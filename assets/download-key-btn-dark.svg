@@ -2,7 +2,7 @@
   <!-- Custom Download Key button (dark mode) -->
 
   <!-- Button outline -->
-  <rect x="1" y="1" width="158" height="38" fill="none" stroke="#e0e0e0" stroke-width="1" rx="2"/>
+  <rect x="1" y="1" width="158" height="40" fill="none" stroke="#e0e0e0" stroke-width="1" rx="2"/>
 
   <!-- Download arrow icon -->
   <g transform="translate(25, 20)">
