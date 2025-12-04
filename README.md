@@ -89,7 +89,7 @@
 
 ### **Want to know more?** See the [setup guide](./docs/QUICKSTART.md) — it only takes about 5 minutes.
 
-### **In a hurry?** You can visit [this page](https://hesreallyhim.github.io/my-pgp-inbox/) to create an encryped message right from your browser.
+### **In a hurry?** You can visit [this page](https://hesreallyhim.github.io/my-pgp-inbox/encrypt) to create an encryped message right from your browser.
 </div>
 
 <br>
