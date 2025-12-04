@@ -20,6 +20,10 @@
 
 <h2 align="center">Send an Encrypted Message</h2>
 
+Have you ever thought, "Wouldn't it be nice if GitHub had DM's?" Probably not... but what if it was strictly opt-in and there was a slight barrier to entry to prevent excessive spamming? Well, Issues can be used to send messages... but they're public. Unless...
+
+**Welcome to my public-private inbox.** To send me a private message, just open an Issue in this repo, encrypt your message with my PGP key, I'll be notified - problem solved!
+
 <h3 align="center">To <em>send</em> an encrypted message, all you need is <em>my</em> public PGP key...</h3>
 
 <p align="center">
