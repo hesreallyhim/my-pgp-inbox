@@ -5,7 +5,7 @@
   <g transform="translate(50, 35)">
     <!-- Key head (circle) - stays mostly stable but squishes slightly -->
     <ellipse cx="0" cy="0" rx="8" fill="none" stroke="#e0e0e0" stroke-width="1.5">
-      <animate attributeName="ry" values="8;8;2;8;8" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="ry" values="8;8;6;8;8" dur="3s" repeatCount="indefinite"/>
     </ellipse>
 
     <!-- Key shaft - stable -->
@@ -13,7 +13,7 @@
 
     <!-- Key teeth - animate to simulate rotation around shaft -->
     <g>
-      <animateTransform attributeName="transform" type="scale" values="1,1; 1,0.2; 1,-1; 1,0.2; 1,1" dur="3s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="scale" values="1,1; 1,1; 1,0.8; 1,0.5; 1,0.8; 1,1; 1,1" dur="3s" repeatCount="indefinite"/>
       <line x1="18" y1="0" x2="18" y2="5" stroke="#e0e0e0" stroke-width="1.5"/>
       <line x1="22" y1="0" x2="22" y2="5" stroke="#e0e0e0" stroke-width="1.5"/>
     </g>
