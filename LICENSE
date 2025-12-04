@@ -4,6 +4,10 @@ The primary source code for this repository, including the code that
 is derived from the template repository, is licensed under AGPLv3,
 per the license below.
 
+`docs/encrypt/openpgp.min.js` is OpenPGP.js v5.11.0 (unmodified) under LGPL-3.0-or-later. See `docs/encrypt/OPENPGPJS-LICENSE`.
+
+Quotations are from the book _Cypherpunks_.
+
 The visual assets contained in the `assets/` directory, and any
 section of the `README.md` that utilizes those assets, is strictly
 reserved and may not be copied, altered, or redistributed
