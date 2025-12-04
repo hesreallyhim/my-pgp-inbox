@@ -150,8 +150,8 @@
 
 <br />
 
->[!Warn]
->PGP encryption is very strong - it is used by journalists, activists, and security professionals all over the world. However, this particular repo is **not** an appropriate platform for sending highly sensitive information, and it's not designed with that purpose in mind. 
+> [!CAUTION]
+> PGP encryption is very strong - it is used by journalists, activists, and security professionals all over the world. However, this particular repo is **not** an appropriate platform for sending highly sensitive information, and it's not designed with that purpose in mind. 
 
 <br />
 
