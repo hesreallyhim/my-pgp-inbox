@@ -79,7 +79,7 @@
 
 <div align="center">
 
-### The crazy thing is: ***no one even knows how it works!***[^1]
+### The crazy thing is: ***no one even knows how it works!*** [^1]
 
 </div>
 
@@ -181,4 +181,4 @@ No amount of coercive force will ever solve a math problem."</i>
 
 See [LICENSE](./LICENSE) for license information.
 
-[^*]: That's not true.  
+[^1]: That's not true.  
