@@ -30,8 +30,7 @@
   </span>
 </div>
 
-<div align="center">
-<span align="center">
+<p align="center">
   <a href="https://github.com/hesreallyhim.gpg">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="./assets/download-key-btn-dark.svg">
@@ -39,6 +38,7 @@
       <img src="./assets/download-key-btn.svg" alt="Download Key" height="44">
     </picture>
   </a>
+  &nbsp;&nbsp;
   <a href="./docs/encrypt/">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="./assets/gpg-encrypt-btn-dark.svg">
@@ -46,6 +46,7 @@
       <img src="./assets/gpg-encrypt-btn.svg" alt="GPG Encrypt" height="44">
     </picture>
   </a>
+  &nbsp;&nbsp;
   <a href="../../issues/new">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="./assets/new-issue-btn-dark.svg">
@@ -53,8 +54,7 @@
       <img src="./assets/new-issue-btn.svg" alt="New Issue" height="44">
     </picture>
   </a>
-  </span>
-  </div>
+</p>
 
 <br>
 
