@@ -9,6 +9,7 @@
  * 2. Paste this code
  * 3. Add the following secrets in your Worker settings:
  *    - GITHUB_TOKEN: A GitHub Personal Access Token with 'repo' scope
+ *    - TURNSTILE_SECRET_KEY: Your Cloudflare Turnstile secret key
  * 4. Update the REPO_OWNER and REPO_NAME constants below
  * 5. Deploy and update SUBMIT_WEBHOOK_URL in index.html
  */
@@ -22,6 +23,41 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 };
+
+/**
+ * Verify Turnstile token with Cloudflare
+ * @param {string} token - The Turnstile token from the client
+ * @param {string} secretKey - The Turnstile secret key
+ * @param {string} ip - The client IP address
+ * @returns {Promise<{success: boolean, error?: string}>}
+ */
+async function verifyTurnstile(token, secretKey, ip) {
+  const formData = new URLSearchParams();
+  formData.append('secret', secretKey);
+  formData.append('response', token);
+  if (ip) {
+    formData.append('remoteip', ip);
+  }
+
+  const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: formData.toString(),
+  });
+
+  const result = await response.json();
+
+  if (result.success) {
+    return { success: true };
+  } else {
+    return {
+      success: false,
+      error: result['error-codes']?.join(', ') || 'Verification failed',
+    };
+  }
+}
 
 export default {
   async fetch(request, env) {
@@ -42,6 +78,26 @@ export default {
     try {
       const body = await request.json();
       const encryptedMessage = body.encrypted_message;
+      const turnstileToken = body.turnstile_token;
+
+      // Validate the Turnstile token first
+      if (!turnstileToken) {
+        return new Response(JSON.stringify({ error: 'Verification token required' }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      const ip = request.headers.get('CF-Connecting-IP');
+      const turnstileResult = await verifyTurnstile(turnstileToken, env.TURNSTILE_SECRET_KEY, ip);
+
+      if (!turnstileResult.success) {
+        console.error('Turnstile verification failed:', turnstileResult.error);
+        return new Response(JSON.stringify({ error: 'Verification failed. Please try again.' }), {
+          status: 403,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
 
       // Validate the message
       if (!encryptedMessage || !encryptedMessage.includes('-----BEGIN PGP MESSAGE-----')) {
@@ -50,10 +106,6 @@ export default {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       }
-
-      // Basic rate limiting using CF headers
-      const ip = request.headers.get('CF-Connecting-IP');
-      // You could add more sophisticated rate limiting here using KV or Durable Objects
 
       // Trigger the GitHub workflow via repository_dispatch
       const githubResponse = await fetch(
