@@ -1,0 +1,6 @@
+name = "pgp-inbox"
+main = "pgp-inbox-worker.js"
+compatibility_date = "2024-01-01"
+
+# Custom domain is configured in Cloudflare dashboard
+# https://pgp-inbox.hesreallyhim.com
