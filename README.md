@@ -22,7 +22,9 @@
 
 Have you ever thought, "Wouldn't it be nice if GitHub had DM's?" Probably not... but what if it was strictly opt-in and there was a slight barrier to entry to prevent excessive spamming? Well, Issues can be used to send messages... but they're public. Unless...
 
-**Welcome to my public-private inbox.** To send me a private message, just open an Issue in this repo, encrypt your message with my PGP key, I'll be notified - problem solved!
+**Welcome to my public-private inbox.** 
+
+To send me a private message, just open an Issue in this repo, encrypt your message with my PGP key, I'll be notified - problem solved!
 
 <h3 align="center">To <em>send</em> an encrypted message, all you need is <em>my</em> public PGP key...</h3>
 
@@ -97,6 +99,13 @@ Have you ever thought, "Wouldn't it be nice if GitHub had DM's?" Probably not...
 ### **Want to know more?** See the [setup guide](./docs/QUICKSTART.md) — it only takes about 5 minutes.
 
 ### **In a hurry?** You can visit [this page](https://hesreallyhim.github.io/my-pgp-inbox/encrypt) to create an encryped message right from your browser.
+
+### Add [this badge](https://github.com/hesreallyhim/github-gpg-badge) - ![gpg-badge](https://camo.githubusercontent.com/0a164c2d7c0b93b3f106c09327c5f3c9aac993d0948537cb37b092449a117145/68747470733a2f2f6770672d62616467652e6865737265616c6c7968696d2e636f6d2f6865737265616c6c7968696d2e737667) - to your profile to let other users know that you're helping to make GitHub more secure.
+
+### Want to set up your own PGP inbox? You can get started in no time using [this template repository](https://github.com/hesreallyhim/pgp-inbox-template). 
+
+### (Want to have it customized for style? Reach out! You know how to get in touch 👆)
+
 </div>
 
 <br>
@@ -187,5 +196,9 @@ No amount of coercive force will ever solve a math problem."</i>
 ## Licenses
 
 See [LICENSE](./LICENSE) for license information.
+
+### Disclaimer
+
+This repo is intended to provide a reliable means for private communication. It is not "hardened" and no strong guarantees of privacy or secrecy can be made. Also, spam is still spam, even if it's encrypted. Thanks.
 
 [^1]: That's not true.  
