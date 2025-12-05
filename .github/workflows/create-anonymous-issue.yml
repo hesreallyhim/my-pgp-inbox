@@ -1,0 +1,37 @@
+name: Create Anonymous Issue
+
+on:
+  repository_dispatch:
+    types: [anonymous_message]
+
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: Create issue from encrypted message
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const encryptedMessage = context.payload.client_payload.encrypted_message;
+
+            if (!encryptedMessage || !encryptedMessage.includes('-----BEGIN PGP MESSAGE-----')) {
+              console.log('Invalid or missing encrypted message');
+              return;
+            }
+
+            // Create a truncated preview for the title (first 50 chars of ciphertext)
+            const ciphertextStart = encryptedMessage.indexOf('-----BEGIN PGP MESSAGE-----');
+            const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Anonymous Encrypted Message - ${timestamp}`,
+              body: `This encrypted message was submitted anonymously via the [encryption page](https://hesreallyhim.github.io/my-pgp-inbox/encrypt).\n\n\`\`\`\n${encryptedMessage}\n\`\`\``,
+              labels: ['anonymous', 'encrypted']
+            });
+
+            console.log('Issue created successfully');

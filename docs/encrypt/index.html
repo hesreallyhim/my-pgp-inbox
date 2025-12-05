@@ -8,6 +8,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon-dark.svg" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
+  <!-- Cloudflare Turnstile for bot protection -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 </head>
 <body>
   <div class="container">
@@ -30,6 +32,16 @@
         <textarea id="plaintext" placeholder="Type your message here..." rows="6"></textarea>
       </div>
 
+      <div class="input-section contact-section">
+        <label for="contact-info">Email address <span class="optional-label">(optional)</span></label>
+        <input type="email" id="contact-info" placeholder="your@email.com">
+        <div class="checkbox-row">
+          <input type="checkbox" id="include-contact" checked>
+          <label for="include-contact" class="checkbox-label">Include email in encrypted message</label>
+        </div>
+        <p class="field-hint">If you want a response, include your email. This will be encrypted with your message.</p>
+      </div>
+
       <button id="encrypt-btn" class="primary-btn">
         <span class="btn-text">Encrypt</span>
         <span class="btn-loading" hidden>Encrypting...</span>
@@ -39,9 +51,30 @@
         <label for="ciphertext">Encrypted message</label>
         <textarea id="ciphertext" readonly rows="8"></textarea>
 
-        <div class="button-row">
-          <button id="copy-btn" class="secondary-btn">Copy</button>
-          <a id="issue-link" class="secondary-btn" target="_blank">Open Issue</a>
+        <div class="delivery-options">
+          <div class="delivery-option">
+            <h3>GitHub Users</h3>
+            <p>Copy the encrypted message and open a new issue in the repository.</p>
+            <div class="button-row">
+              <button id="copy-btn" class="secondary-btn">Copy</button>
+              <a id="issue-link" class="secondary-btn" target="_blank">Open Issue</a>
+            </div>
+          </div>
+
+          <div class="delivery-divider">
+            <span>or</span>
+          </div>
+
+          <div class="delivery-option">
+            <h3>Non-GitHub Users</h3>
+            <p>Submit anonymously. A bot will create an issue with your encrypted message. <strong>No one can read it except the recipient.</strong></p>
+            <div id="turnstile-container" class="turnstile-container"></div>
+            <button id="submit-anon-btn" class="secondary-btn submit-anon" disabled>
+              <span class="btn-text">Submit Anonymously</span>
+              <span class="btn-loading" hidden>Submitting...</span>
+            </button>
+            <p class="submit-hint" id="submit-hint" hidden></p>
+          </div>
         </div>
       </div>
 
@@ -49,6 +82,7 @@
     </main>
 
     <footer>
+      <a href="https://github.com/hesreallyhim/my-pgp-inbox" class="back-link">&larr; Back to repository</a>
       <p class="disclaimer">
         This is a lightweight tool for casual private messages.<br>
         For high-risk communications, use a local GPG client.
@@ -61,7 +95,6 @@
         The OpenPGP library is self-hosted in this repo and pinned with Subresource Integrity (SRI).<br>
         SRI makes the browser hash-check the script (`sha384-WpBP4SaUVolOFkq/8kIzD3g7GLGROT9sB1GK17YILwH7B8wqlpDMosPKbdRD4xjt`); if it ever differs, it will refuse to run.
       </p>
-      <a href="https://github.com/hesreallyhim/my-pgp-inbox" class="back-link">&larr; Back to repository</a>
     </footer>
   </div>
 
@@ -73,6 +106,10 @@
     const REPO_OWNER = 'hesreallyhim';
     const REPO_NAME = 'my-pgp-inbox';
     const ISSUE_URL = `https://github.com/${REPO_OWNER}/${REPO_NAME}/issues/new`;
+    // Webhook URL for anonymous submissions - set this to your Cloudflare Worker or serverless endpoint
+    const SUBMIT_WEBHOOK_URL = 'https://pgp-inbox.hesreallyhim.com/submit';
+    // Cloudflare Turnstile site key - get this from your Cloudflare dashboard
+    const TURNSTILE_SITE_KEY = '0x4AAAAAACFAAs20wwtW_pgY';
     const EMBEDDED_PUBLIC_KEY = `-----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mQINBGhuC9gBEADO0czssrOS/mrhR5BXWdaVDfeCJVTGrsWH3qZWGH04fG0i7RRm
@@ -128,17 +165,26 @@ fmzwdkmqAa8NvqYHaYxpYA==
     const EXPECTED_FINGERPRINT = '981B3FD2EC4196BE2BF869F3C27DD4CA8AA8F22B';
 
     let publicKey = null;
+    let turnstileWidgetId = null;
+    let turnstileToken = null;
 
     // Elements
     const plaintextEl = document.getElementById('plaintext');
+    const contactInfoEl = document.getElementById('contact-info');
+    const includeContactEl = document.getElementById('include-contact');
     const ciphertextEl = document.getElementById('ciphertext');
     const encryptBtn = document.getElementById('encrypt-btn');
     const copyBtn = document.getElementById('copy-btn');
     const issueLink = document.getElementById('issue-link');
+    const submitAnonBtn = document.getElementById('submit-anon-btn');
+    const submitHint = document.getElementById('submit-hint');
+    const turnstileContainer = document.getElementById('turnstile-container');
     const outputSection = document.getElementById('output-section');
     const errorMessage = document.getElementById('error-message');
     const btnText = encryptBtn.querySelector('.btn-text');
     const btnLoading = encryptBtn.querySelector('.btn-loading');
+    const anonBtnText = submitAnonBtn.querySelector('.btn-text');
+    const anonBtnLoading = submitAnonBtn.querySelector('.btn-loading');
 
     function normalizeFingerprint(fp) {
       return fp.replace(/\s+/g, '').toUpperCase();
@@ -160,11 +206,24 @@ fmzwdkmqAa8NvqYHaYxpYA==
       }
     }
 
+    // Build the full plaintext including email if selected
+    function buildFullPlaintext() {
+      let plaintext = plaintextEl.value.trim();
+      const email = contactInfoEl.value.trim();
+      const includeEmail = includeContactEl.checked;
+
+      if (includeEmail && email) {
+        plaintext = `${plaintext}\n\n---\nEmail: ${email}`;
+      }
+
+      return plaintext;
+    }
+
     // Encrypt message
     async function encryptMessage() {
-      const plaintext = plaintextEl.value.trim();
+      const plaintext = buildFullPlaintext();
 
-      if (!plaintext) {
+      if (!plaintextEl.value.trim()) {
         showError('Please enter a message to encrypt.');
         return;
       }
@@ -188,6 +247,10 @@ fmzwdkmqAa8NvqYHaYxpYA==
 
         ciphertextEl.value = encrypted;
         outputSection.hidden = false;
+        submitHint.hidden = true;
+
+        // Render Turnstile widget if not already rendered
+        renderTurnstile();
       } catch (err) {
         showError('Encryption failed. Please try again.');
         console.error(err);
@@ -218,6 +281,107 @@ fmzwdkmqAa8NvqYHaYxpYA==
       }
     }
 
+    // Submit anonymously via webhook
+    async function submitAnonymously() {
+      const ciphertext = ciphertextEl.value.trim();
+
+      if (!ciphertext) {
+        showError('No encrypted message to submit.');
+        return;
+      }
+
+      if (!turnstileToken) {
+        showError('Please complete the verification challenge.');
+        return;
+      }
+
+      // Show loading state
+      anonBtnText.hidden = true;
+      anonBtnLoading.hidden = false;
+      submitAnonBtn.disabled = true;
+      hideError();
+      submitHint.hidden = true;
+
+      try {
+        const response = await fetch(SUBMIT_WEBHOOK_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            encrypted_message: ciphertext,
+            turnstile_token: turnstileToken
+          })
+        });
+
+        if (response.ok) {
+          const result = await response.json().catch(() => ({}));
+          submitHint.textContent = result.message || 'Message submitted! An issue will be created shortly.';
+          submitHint.className = 'submit-hint success';
+          submitHint.hidden = false;
+          submitAnonBtn.disabled = true;
+        } else if (response.status === 404 || response.status === 0) {
+          // Worker not set up yet
+          submitHint.textContent = 'Anonymous submission is not yet configured. Please copy the message and submit manually.';
+          submitHint.className = 'submit-hint';
+          submitHint.hidden = false;
+        } else {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.error || `Submission failed: ${response.status}`);
+        }
+      } catch (err) {
+        if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
+          submitHint.textContent = 'Anonymous submission is not available. Please copy the message and submit manually.';
+          submitHint.className = 'submit-hint';
+        } else {
+          submitHint.textContent = 'Submission failed. Please copy the message and submit manually.';
+          submitHint.className = 'submit-hint error';
+        }
+        submitHint.hidden = false;
+        console.error(err);
+        // Reset Turnstile for retry
+        resetTurnstile();
+      } finally {
+        anonBtnText.hidden = false;
+        anonBtnLoading.hidden = true;
+      }
+    }
+
+    // Turnstile widget management
+    function renderTurnstile() {
+      // Only render if Turnstile API is loaded and widget not already rendered
+      if (typeof turnstile === 'undefined' || turnstileWidgetId !== null) {
+        return;
+      }
+
+      turnstileWidgetId = turnstile.render(turnstileContainer, {
+        sitekey: TURNSTILE_SITE_KEY,
+        theme: 'auto',
+        callback: function(token) {
+          turnstileToken = token;
+          submitAnonBtn.disabled = false;
+        },
+        'expired-callback': function() {
+          turnstileToken = null;
+          submitAnonBtn.disabled = true;
+        },
+        'error-callback': function() {
+          turnstileToken = null;
+          submitHint.textContent = 'Verification failed. Please refresh and try again.';
+          submitHint.className = 'submit-hint error';
+          submitHint.hidden = false;
+        }
+      });
+    }
+
+    function resetTurnstile() {
+      if (turnstileWidgetId !== null && typeof turnstile !== 'undefined') {
+        turnstile.reset(turnstileWidgetId);
+        turnstileToken = null;
+        submitAnonBtn.disabled = true;
+      }
+    }
+
     // Error handling
     function showError(msg) {
       errorMessage.textContent = msg;
@@ -236,9 +400,11 @@ fmzwdkmqAa8NvqYHaYxpYA==
     // Event listeners
     encryptBtn.addEventListener('click', encryptMessage);
     copyBtn.addEventListener('click', copyToClipboard);
+    submitAnonBtn.addEventListener('click', submitAnonymously);
     ciphertextEl.addEventListener('click', selectCiphertext);
     ciphertextEl.addEventListener('focus', selectCiphertext);
     plaintextEl.addEventListener('input', hideError);
+    contactInfoEl.addEventListener('input', hideError);
 
     // Allow Ctrl+Enter to encrypt
     plaintextEl.addEventListener('keydown', (e) => {
