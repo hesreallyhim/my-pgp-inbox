@@ -35,7 +35,7 @@ The worker:
 
 Turnstile is Cloudflare's CAPTCHA alternative that protects against bot abuse.
 
-- **Site Key** (public, in `index.html`): `0x4AAAAAACFAAs20wwtW_pgY`
+- **Site Key**: Public, embedded in `docs/encrypt/index.html`
 - **Secret Key**: Stored as worker secret `TURNSTILE_SECRET_KEY`
 - **Allowed Hostnames**: `hesreallyhim.github.io`
 
