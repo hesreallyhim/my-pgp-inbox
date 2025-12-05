@@ -31,13 +31,13 @@
       </div>
 
       <div class="input-section contact-section">
-        <label for="contact-info">Contact information <span class="optional-label">(optional)</span></label>
-        <input type="text" id="contact-info" placeholder="Email, Signal, or other way to reach you...">
+        <label for="contact-info">Email address <span class="optional-label">(optional)</span></label>
+        <input type="email" id="contact-info" placeholder="your@email.com">
         <div class="checkbox-row">
           <input type="checkbox" id="include-contact" checked>
-          <label for="include-contact" class="checkbox-label">Include contact info in encrypted message</label>
+          <label for="include-contact" class="checkbox-label">Include email in encrypted message</label>
         </div>
-        <p class="field-hint">If you want a response, include how to reach you. This will be encrypted with your message.</p>
+        <p class="field-hint">If you want a response, include your email. This will be encrypted with your message.</p>
       </div>
 
       <button id="encrypt-btn" class="primary-btn">
@@ -71,7 +71,6 @@
               <span class="btn-loading" hidden>Submitting...</span>
             </button>
             <p class="submit-hint" id="submit-hint" hidden></p>
-            <p class="email-fallback">Or <a id="email-link" href="#">send via email</a> instead.</p>
           </div>
         </div>
       </div>
@@ -172,7 +171,6 @@ fmzwdkmqAa8NvqYHaYxpYA==
     const issueLink = document.getElementById('issue-link');
     const submitAnonBtn = document.getElementById('submit-anon-btn');
     const submitHint = document.getElementById('submit-hint');
-    const emailLink = document.getElementById('email-link');
     const outputSection = document.getElementById('output-section');
     const errorMessage = document.getElementById('error-message');
     const btnText = encryptBtn.querySelector('.btn-text');
@@ -200,14 +198,14 @@ fmzwdkmqAa8NvqYHaYxpYA==
       }
     }
 
-    // Build the full plaintext including contact info if selected
+    // Build the full plaintext including email if selected
     function buildFullPlaintext() {
       let plaintext = plaintextEl.value.trim();
-      const contactInfo = contactInfoEl.value.trim();
-      const includeContact = includeContactEl.checked;
+      const email = contactInfoEl.value.trim();
+      const includeEmail = includeContactEl.checked;
 
-      if (includeContact && contactInfo) {
-        plaintext = `${plaintext}\n\n---\nContact: ${contactInfo}`;
+      if (includeEmail && email) {
+        plaintext = `${plaintext}\n\n---\nEmail: ${email}`;
       }
 
       return plaintext;
@@ -242,8 +240,6 @@ fmzwdkmqAa8NvqYHaYxpYA==
         ciphertextEl.value = encrypted;
         outputSection.hidden = false;
         submitHint.hidden = true;
-        // Update email link with encrypted message
-        emailLink.href = `mailto:hesreallyhim@proton.me?subject=Encrypted%20Message&body=${encodeURIComponent(encrypted)}`;
       } catch (err) {
         showError('Encryption failed. Please try again.');
         console.error(err);
@@ -308,8 +304,8 @@ fmzwdkmqAa8NvqYHaYxpYA==
           submitHint.hidden = false;
           submitAnonBtn.disabled = true;
         } else if (response.status === 404 || response.status === 0) {
-          // Worker not set up yet - show email fallback
-          submitHint.innerHTML = 'Anonymous submission is not yet configured. Please <a href="' + emailLink.href + '">send via email</a> instead.';
+          // Worker not set up yet
+          submitHint.textContent = 'Anonymous submission is not yet configured. Please copy the message and submit manually.';
           submitHint.className = 'submit-hint';
           submitHint.hidden = false;
         } else {
@@ -318,10 +314,10 @@ fmzwdkmqAa8NvqYHaYxpYA==
         }
       } catch (err) {
         if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
-          submitHint.innerHTML = 'Anonymous submission is not available. Please <a href="' + emailLink.href + '">send via email</a> instead.';
+          submitHint.textContent = 'Anonymous submission is not available. Please copy the message and submit manually.';
           submitHint.className = 'submit-hint';
         } else {
-          submitHint.textContent = 'Submission failed. Please try the email option or copy and send manually.';
+          submitHint.textContent = 'Submission failed. Please copy the message and submit manually.';
           submitHint.className = 'submit-hint error';
         }
         submitHint.hidden = false;
