@@ -6,7 +6,7 @@
  *
  * Setup:
  * 1. Create a new Cloudflare Worker at https://workers.cloudflare.com
- * 2. Paste this code
+ * 2. Paste this code (or connect GitHub to the Worker)
  * 3. Add the following secrets in your Worker settings:
  *    - GITHUB_TOKEN: A GitHub Personal Access Token with 'repo' scope
  *    - TURNSTILE_SECRET_KEY: Your Cloudflare Turnstile secret key
