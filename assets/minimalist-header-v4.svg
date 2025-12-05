@@ -19,14 +19,14 @@
 
   <!-- Key icon - positioned to right of box, vertically centered (mirrors lock) -->
   <g transform="translate(620, 55)">
-    <!-- Key head (circle with hole) -->
-    <circle cx="12" cy="-10" r="12" fill="none" stroke="#222" stroke-width="2"/>
-    <circle cx="12" cy="-10" r="5" fill="none" stroke="#222" stroke-width="2"/>
-    <!-- Key shaft -->
-    <line x1="0" y1="-10" x2="-18" y2="-10" stroke="#222" stroke-width="2"/>
-    <!-- Key teeth -->
-    <line x1="-18" y1="-10" x2="-18" y2="-2" stroke="#222" stroke-width="2"/>
-    <line x1="-12" y1="-10" x2="-12" y2="-4" stroke="#222" stroke-width="2"/>
+    <!-- Key head (circle with hole) at bottom -->
+    <circle cx="0" cy="12" r="12" fill="none" stroke="#222" stroke-width="2"/>
+    <circle cx="0" cy="12" r="5" fill="none" stroke="#222" stroke-width="2"/>
+    <!-- Key shaft going up -->
+    <line x1="0" y1="0" x2="0" y2="-20" stroke="#222" stroke-width="2"/>
+    <!-- Key teeth at top, pointing right -->
+    <line x1="0" y1="-20" x2="8" y2="-20" stroke="#222" stroke-width="2"/>
+    <line x1="0" y1="-14" x2="6" y2="-14" stroke="#222" stroke-width="2"/>
   </g>
 
   <!--
