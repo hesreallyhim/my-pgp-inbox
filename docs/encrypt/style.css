@@ -355,6 +355,14 @@ input[type="email"]::placeholder {
   color: var(--text);
 }
 
+/* Turnstile widget */
+.turnstile-container {
+  margin-bottom: 16px;
+  min-height: 65px;
+  display: flex;
+  justify-content: center;
+}
+
 /* Submit hint messages */
 .submit-hint {
   font-size: 13px;

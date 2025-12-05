@@ -8,6 +8,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon-dark.svg" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
+  <!-- Cloudflare Turnstile for bot protection -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 </head>
 <body>
   <div class="container">
@@ -66,7 +68,8 @@
           <div class="delivery-option">
             <h3>Non-GitHub Users</h3>
             <p>Submit anonymously. A bot will create an issue with your encrypted message. <strong>No one can read it except the recipient.</strong></p>
-            <button id="submit-anon-btn" class="secondary-btn submit-anon">
+            <div id="turnstile-container" class="turnstile-container"></div>
+            <button id="submit-anon-btn" class="secondary-btn submit-anon" disabled>
               <span class="btn-text">Submit Anonymously</span>
               <span class="btn-loading" hidden>Submitting...</span>
             </button>
@@ -105,6 +108,8 @@
     const ISSUE_URL = `https://github.com/${REPO_OWNER}/${REPO_NAME}/issues/new`;
     // Webhook URL for anonymous submissions - set this to your Cloudflare Worker or serverless endpoint
     const SUBMIT_WEBHOOK_URL = 'https://pgp-inbox-worker.hesreallyhim.workers.dev/submit';
+    // Cloudflare Turnstile site key - get this from your Cloudflare dashboard
+    const TURNSTILE_SITE_KEY = 'YOUR_TURNSTILE_SITE_KEY';
     const EMBEDDED_PUBLIC_KEY = `-----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mQINBGhuC9gBEADO0czssrOS/mrhR5BXWdaVDfeCJVTGrsWH3qZWGH04fG0i7RRm
@@ -160,6 +165,8 @@ fmzwdkmqAa8NvqYHaYxpYA==
     const EXPECTED_FINGERPRINT = '981B3FD2EC4196BE2BF869F3C27DD4CA8AA8F22B';
 
     let publicKey = null;
+    let turnstileWidgetId = null;
+    let turnstileToken = null;
 
     // Elements
     const plaintextEl = document.getElementById('plaintext');
@@ -171,6 +178,7 @@ fmzwdkmqAa8NvqYHaYxpYA==
     const issueLink = document.getElementById('issue-link');
     const submitAnonBtn = document.getElementById('submit-anon-btn');
     const submitHint = document.getElementById('submit-hint');
+    const turnstileContainer = document.getElementById('turnstile-container');
     const outputSection = document.getElementById('output-section');
     const errorMessage = document.getElementById('error-message');
     const btnText = encryptBtn.querySelector('.btn-text');
@@ -240,6 +248,9 @@ fmzwdkmqAa8NvqYHaYxpYA==
         ciphertextEl.value = encrypted;
         outputSection.hidden = false;
         submitHint.hidden = true;
+
+        // Render Turnstile widget if not already rendered
+        renderTurnstile();
       } catch (err) {
         showError('Encryption failed. Please try again.');
         console.error(err);
@@ -279,6 +290,11 @@ fmzwdkmqAa8NvqYHaYxpYA==
         return;
       }
 
+      if (!turnstileToken) {
+        showError('Please complete the verification challenge.');
+        return;
+      }
+
       // Show loading state
       anonBtnText.hidden = true;
       anonBtnLoading.hidden = false;
@@ -293,7 +309,8 @@ fmzwdkmqAa8NvqYHaYxpYA==
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            encrypted_message: ciphertext
+            encrypted_message: ciphertext,
+            turnstile_token: turnstileToken
           })
         });
 
@@ -322,9 +339,46 @@ fmzwdkmqAa8NvqYHaYxpYA==
         }
         submitHint.hidden = false;
         console.error(err);
+        // Reset Turnstile for retry
+        resetTurnstile();
       } finally {
         anonBtnText.hidden = false;
         anonBtnLoading.hidden = true;
+      }
+    }
+
+    // Turnstile widget management
+    function renderTurnstile() {
+      // Only render if Turnstile API is loaded and widget not already rendered
+      if (typeof turnstile === 'undefined' || turnstileWidgetId !== null) {
+        return;
+      }
+
+      turnstileWidgetId = turnstile.render(turnstileContainer, {
+        sitekey: TURNSTILE_SITE_KEY,
+        theme: 'auto',
+        callback: function(token) {
+          turnstileToken = token;
+          submitAnonBtn.disabled = false;
+        },
+        'expired-callback': function() {
+          turnstileToken = null;
+          submitAnonBtn.disabled = true;
+        },
+        'error-callback': function() {
+          turnstileToken = null;
+          submitHint.textContent = 'Verification failed. Please refresh and try again.';
+          submitHint.className = 'submit-hint error';
+          submitHint.hidden = false;
+        }
+      });
+    }
+
+    function resetTurnstile() {
+      if (turnstileWidgetId !== null && typeof turnstile !== 'undefined') {
+        turnstile.reset(turnstileWidgetId);
+        turnstileToken = null;
+        submitAnonBtn.disabled = true;
       }
     }
 
