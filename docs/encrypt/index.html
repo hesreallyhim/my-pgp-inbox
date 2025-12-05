@@ -30,6 +30,16 @@
         <textarea id="plaintext" placeholder="Type your message here..." rows="6"></textarea>
       </div>
 
+      <div class="input-section contact-section">
+        <label for="contact-info">Contact information <span class="optional-label">(optional)</span></label>
+        <input type="text" id="contact-info" placeholder="Email, Signal, or other way to reach you...">
+        <div class="checkbox-row">
+          <input type="checkbox" id="include-contact" checked>
+          <label for="include-contact" class="checkbox-label">Include contact info in encrypted message</label>
+        </div>
+        <p class="field-hint">If you want a response, include how to reach you. This will be encrypted with your message.</p>
+      </div>
+
       <button id="encrypt-btn" class="primary-btn">
         <span class="btn-text">Encrypt</span>
         <span class="btn-loading" hidden>Encrypting...</span>
@@ -39,9 +49,30 @@
         <label for="ciphertext">Encrypted message</label>
         <textarea id="ciphertext" readonly rows="8"></textarea>
 
-        <div class="button-row">
-          <button id="copy-btn" class="secondary-btn">Copy</button>
-          <a id="issue-link" class="secondary-btn" target="_blank">Open Issue</a>
+        <div class="delivery-options">
+          <div class="delivery-option">
+            <h3>GitHub Users</h3>
+            <p>Copy the encrypted message and open a new issue in the repository.</p>
+            <div class="button-row">
+              <button id="copy-btn" class="secondary-btn">Copy</button>
+              <a id="issue-link" class="secondary-btn" target="_blank">Open Issue</a>
+            </div>
+          </div>
+
+          <div class="delivery-divider">
+            <span>or</span>
+          </div>
+
+          <div class="delivery-option">
+            <h3>Non-GitHub Users</h3>
+            <p>Submit anonymously. A bot will create an issue with your encrypted message. <strong>No one can read it except the recipient.</strong></p>
+            <button id="submit-anon-btn" class="secondary-btn submit-anon">
+              <span class="btn-text">Submit Anonymously</span>
+              <span class="btn-loading" hidden>Submitting...</span>
+            </button>
+            <p class="submit-hint" id="submit-hint" hidden></p>
+            <p class="email-fallback">Or <a id="email-link" href="#">send via email</a> instead.</p>
+          </div>
         </div>
       </div>
 
@@ -49,6 +80,7 @@
     </main>
 
     <footer>
+      <a href="https://github.com/hesreallyhim/my-pgp-inbox" class="back-link">&larr; Back to repository</a>
       <p class="disclaimer">
         This is a lightweight tool for casual private messages.<br>
         For high-risk communications, use a local GPG client.
@@ -61,7 +93,6 @@
         The OpenPGP library is self-hosted in this repo and pinned with Subresource Integrity (SRI).<br>
         SRI makes the browser hash-check the script (`sha384-WpBP4SaUVolOFkq/8kIzD3g7GLGROT9sB1GK17YILwH7B8wqlpDMosPKbdRD4xjt`); if it ever differs, it will refuse to run.
       </p>
-      <a href="https://github.com/hesreallyhim/my-pgp-inbox" class="back-link">&larr; Back to repository</a>
     </footer>
   </div>
 
@@ -73,6 +104,8 @@
     const REPO_OWNER = 'hesreallyhim';
     const REPO_NAME = 'my-pgp-inbox';
     const ISSUE_URL = `https://github.com/${REPO_OWNER}/${REPO_NAME}/issues/new`;
+    // Webhook URL for anonymous submissions - set this to your Cloudflare Worker or serverless endpoint
+    const SUBMIT_WEBHOOK_URL = 'https://pgp-inbox-worker.hesreallyhim.workers.dev/submit';
     const EMBEDDED_PUBLIC_KEY = `-----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mQINBGhuC9gBEADO0czssrOS/mrhR5BXWdaVDfeCJVTGrsWH3qZWGH04fG0i7RRm
@@ -131,14 +164,21 @@ fmzwdkmqAa8NvqYHaYxpYA==
 
     // Elements
     const plaintextEl = document.getElementById('plaintext');
+    const contactInfoEl = document.getElementById('contact-info');
+    const includeContactEl = document.getElementById('include-contact');
     const ciphertextEl = document.getElementById('ciphertext');
     const encryptBtn = document.getElementById('encrypt-btn');
     const copyBtn = document.getElementById('copy-btn');
     const issueLink = document.getElementById('issue-link');
+    const submitAnonBtn = document.getElementById('submit-anon-btn');
+    const submitHint = document.getElementById('submit-hint');
+    const emailLink = document.getElementById('email-link');
     const outputSection = document.getElementById('output-section');
     const errorMessage = document.getElementById('error-message');
     const btnText = encryptBtn.querySelector('.btn-text');
     const btnLoading = encryptBtn.querySelector('.btn-loading');
+    const anonBtnText = submitAnonBtn.querySelector('.btn-text');
+    const anonBtnLoading = submitAnonBtn.querySelector('.btn-loading');
 
     function normalizeFingerprint(fp) {
       return fp.replace(/\s+/g, '').toUpperCase();
@@ -160,11 +200,24 @@ fmzwdkmqAa8NvqYHaYxpYA==
       }
     }
 
+    // Build the full plaintext including contact info if selected
+    function buildFullPlaintext() {
+      let plaintext = plaintextEl.value.trim();
+      const contactInfo = contactInfoEl.value.trim();
+      const includeContact = includeContactEl.checked;
+
+      if (includeContact && contactInfo) {
+        plaintext = `${plaintext}\n\n---\nContact: ${contactInfo}`;
+      }
+
+      return plaintext;
+    }
+
     // Encrypt message
     async function encryptMessage() {
-      const plaintext = plaintextEl.value.trim();
+      const plaintext = buildFullPlaintext();
 
-      if (!plaintext) {
+      if (!plaintextEl.value.trim()) {
         showError('Please enter a message to encrypt.');
         return;
       }
@@ -188,6 +241,9 @@ fmzwdkmqAa8NvqYHaYxpYA==
 
         ciphertextEl.value = encrypted;
         outputSection.hidden = false;
+        submitHint.hidden = true;
+        // Update email link with encrypted message
+        emailLink.href = `mailto:hesreallyhim@proton.me?subject=Encrypted%20Message&body=${encodeURIComponent(encrypted)}`;
       } catch (err) {
         showError('Encryption failed. Please try again.');
         console.error(err);
@@ -218,6 +274,64 @@ fmzwdkmqAa8NvqYHaYxpYA==
       }
     }
 
+    // Submit anonymously via webhook
+    async function submitAnonymously() {
+      const ciphertext = ciphertextEl.value.trim();
+
+      if (!ciphertext) {
+        showError('No encrypted message to submit.');
+        return;
+      }
+
+      // Show loading state
+      anonBtnText.hidden = true;
+      anonBtnLoading.hidden = false;
+      submitAnonBtn.disabled = true;
+      hideError();
+      submitHint.hidden = true;
+
+      try {
+        const response = await fetch(SUBMIT_WEBHOOK_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            encrypted_message: ciphertext
+          })
+        });
+
+        if (response.ok) {
+          const result = await response.json().catch(() => ({}));
+          submitHint.textContent = result.message || 'Message submitted! An issue will be created shortly.';
+          submitHint.className = 'submit-hint success';
+          submitHint.hidden = false;
+          submitAnonBtn.disabled = true;
+        } else if (response.status === 404 || response.status === 0) {
+          // Worker not set up yet - show email fallback
+          submitHint.innerHTML = 'Anonymous submission is not yet configured. Please <a href="' + emailLink.href + '">send via email</a> instead.';
+          submitHint.className = 'submit-hint';
+          submitHint.hidden = false;
+        } else {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.error || `Submission failed: ${response.status}`);
+        }
+      } catch (err) {
+        if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
+          submitHint.innerHTML = 'Anonymous submission is not available. Please <a href="' + emailLink.href + '">send via email</a> instead.';
+          submitHint.className = 'submit-hint';
+        } else {
+          submitHint.textContent = 'Submission failed. Please try the email option or copy and send manually.';
+          submitHint.className = 'submit-hint error';
+        }
+        submitHint.hidden = false;
+        console.error(err);
+      } finally {
+        anonBtnText.hidden = false;
+        anonBtnLoading.hidden = true;
+      }
+    }
+
     // Error handling
     function showError(msg) {
       errorMessage.textContent = msg;
@@ -236,9 +350,11 @@ fmzwdkmqAa8NvqYHaYxpYA==
     // Event listeners
     encryptBtn.addEventListener('click', encryptMessage);
     copyBtn.addEventListener('click', copyToClipboard);
+    submitAnonBtn.addEventListener('click', submitAnonymously);
     ciphertextEl.addEventListener('click', selectCiphertext);
     ciphertextEl.addEventListener('focus', selectCiphertext);
     plaintextEl.addEventListener('input', hideError);
+    contactInfoEl.addEventListener('input', hideError);
 
     // Allow Ctrl+Enter to encrypt
     plaintextEl.addEventListener('keydown', (e) => {
