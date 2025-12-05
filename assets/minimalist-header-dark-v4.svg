@@ -3,28 +3,43 @@
   <rect width="800" height="145" fill="#1a1a1a"/>
 
   <!-- Lock icon - positioned to left of box, vertically centered -->
-  <g transform="translate(100, 55)">
+  <g transform="translate(180, 55)">
     <rect x="-15" y="-5" width="30" height="25" fill="none" stroke="#e0e0e0" stroke-width="2" rx="3"/>
     <path d="M-10,-5 L-10,-15 Q-10,-25 0,-25 Q10,-25 10,-15 L10,-5" fill="none" stroke="#e0e0e0" stroke-width="2"/>
     <circle cx="0" cy="7" r="3" fill="#e0e0e0"/>
     <line x1="0" y1="10" x2="0" y2="16" stroke="#e0e0e0" stroke-width="2"/>
   </g>
 
-  <!-- Title (centered in box area) -->
-  <text x="320" y="65" font-family="Helvetica Neue, Arial, sans-serif" font-size="32" fill="#e0e0e0" font-weight="300" letter-spacing="2" text-anchor="middle">My Private Inbox</text>
+  <!-- Title (centered in canvas) -->
+  <text x="400" y="65" font-family="Helvetica Neue, Arial, sans-serif" font-size="32" fill="#e0e0e0" font-weight="300" letter-spacing="2" text-anchor="middle">My Private Inbox</text>
 
   <!-- Taglines (below box) -->
-  <text x="320" y="103" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" fill="#666" letter-spacing="1" text-anchor="middle">SECURE PRIVATE MESSAGING</text>
-  <text x="320" y="120" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" fill="#666" letter-spacing="1" text-anchor="middle">RIGHT OUT IN THE OPEN</text>
+  <text x="400" y="103" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" fill="#666" letter-spacing="1" text-anchor="middle">SECURE PRIVATE MESSAGING</text>
+  <text x="400" y="120" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" fill="#666" letter-spacing="1" text-anchor="middle">RIGHT OUT IN THE OPEN</text>
+
+  <!-- Key icon - positioned to right of box, vertically centered (mirrors lock) -->
+  <g transform="translate(620, 55)">
+    <!-- Key bow (decorative oval head) at bottom -->
+    <ellipse cx="0" cy="14" rx="10" ry="12" fill="none" stroke="#e0e0e0" stroke-width="2"/>
+    <ellipse cx="0" cy="14" rx="4" ry="5" fill="none" stroke="#e0e0e0" stroke-width="2"/>
+    <!-- Key shaft going up -->
+    <line x1="0" y1="2" x2="0" y2="-22" stroke="#e0e0e0" stroke-width="2"/>
+    <!-- Key teeth/wards at top, pointing right -->
+    <line x1="0" y1="-22" x2="7" y2="-22" stroke="#e0e0e0" stroke-width="2"/>
+    <line x1="0" y1="-17" x2="5" y2="-17" stroke="#e0e0e0" stroke-width="2"/>
+    <line x1="0" y1="-12" x2="7" y2="-12" stroke="#e0e0e0" stroke-width="2"/>
+    <line x1="0" y1="-7" x2="4" y2="-7" stroke="#e0e0e0" stroke-width="2"/>
+  </g>
 
   <!--
     Box dimensions with 20px padding + 10px top container padding:
-    - Box: x=150, y=25, width=340, height=60
-    - Corners: (150,25), (490,25), (490,85), (150,85)
+    - Box: x=230, y=25, width=340, height=60
+    - Corners: (230,25), (570,25), (570,85), (230,85)
+    - Center of canvas: 400
   -->
 
   <!-- Background track (box outline) -->
-  <rect x="150" y="25" width="340" height="60" fill="none" stroke="#333" stroke-width="1"/>
+  <rect x="230" y="25" width="340" height="60" fill="none" stroke="#333" stroke-width="1"/>
 
   <!--
     Animated box sequence (8s total):
@@ -36,7 +51,7 @@
   <line y1="85" y2="85" stroke="#e0e0e0" stroke-width="2">
     <animate
       attributeName="x1"
-      values="150;150;490;490"
+      values="230;230;570;570"
       keyTimes="0;0.125;0.25;1"
       dur="8s"
       repeatCount="indefinite"
@@ -44,7 +59,7 @@
       keySplines="0 0 1 1; 0 0 0.58 1; 0 0 1 1"/>
     <animate
       attributeName="x2"
-      values="150;490;490;490"
+      values="230;570;570;570"
       keyTimes="0;0.125;0.25;1"
       dur="8s"
       repeatCount="indefinite"
@@ -52,8 +67,8 @@
       keySplines="0.42 0 1 1; 0 0 1 1; 0 0 1 1"/>
   </line>
 
-  <!-- Right line (x=490): active 2-4s -->
-  <line x1="490" x2="490" stroke="#e0e0e0" stroke-width="2">
+  <!-- Right line (x=570): active 2-4s -->
+  <line x1="570" x2="570" stroke="#e0e0e0" stroke-width="2">
     <animate
       attributeName="y1"
       values="85;85;25;25;25"
@@ -76,7 +91,7 @@
   <line y1="25" y2="25" stroke="#e0e0e0" stroke-width="2">
     <animate
       attributeName="x1"
-      values="490;490;150;150;150"
+      values="570;570;230;230;230"
       keyTimes="0;0.5;0.625;0.75;1"
       dur="8s"
       repeatCount="indefinite"
@@ -84,7 +99,7 @@
       keySplines="0 0 1 1; 0.42 0 1 1; 0 0 1 1; 0 0 1 1"/>
     <animate
       attributeName="x2"
-      values="490;490;490;150;150"
+      values="570;570;570;230;230"
       keyTimes="0;0.5;0.625;0.75;1"
       dur="8s"
       repeatCount="indefinite"
@@ -92,8 +107,8 @@
       keySplines="0 0 1 1; 0 0 1 1; 0 0 0.58 1; 0 0 1 1"/>
   </line>
 
-  <!-- Left line (x=150): active 6-8s -->
-  <line x1="150" x2="150" stroke="#e0e0e0" stroke-width="2">
+  <!-- Left line (x=230): active 6-8s -->
+  <line x1="230" x2="230" stroke="#e0e0e0" stroke-width="2">
     <animate
       attributeName="y1"
       values="85;25;25;85"
