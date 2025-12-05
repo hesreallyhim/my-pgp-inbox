@@ -62,14 +62,17 @@ Have you ever thought, "Wouldn't it be nice if GitHub had DM's?" Probably not...
 
 <h3 align="center">If you want my <em>reply</em> to be encrypted, all you need is to share <em>your</em> public PGP key...</h3>
 
+<h4 align="center">In fact, <em>GitHub already handles this part for you!</em> A user's public key can be found just by visiting <code>https://github.com/USERNAME.gpg</code></h4>
+
+
 <table align="center">
 <tr>
-<td width="200"><b>Public Key</b></td>
-<td>Lets others send messages that only <em>you</em> can read</td>
+<td width="200"><h3><b>Public Key</b></h3></td>
+<td><h3>Lets others send messages that only <em>you</em> can read</h3></td>
 </tr>
 <tr>
-<td><b>Private Key</b></td>
-<td>Lets <em>you</em> read messages that no one <em>else</em> can read</td>
+<td><h3><b>Private Key</b></h3></td>
+<td><h3>Lets <em>you</em> read messages that no one <em>else</em> can read</h3></td>
 </tr>
 </table>
 
