@@ -124,8 +124,8 @@ To send me a private message, just open an Issue in this repo, encrypt your mess
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/footer-lock-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="./assets/footer-lock.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/footer-lock-dark.svg" height="30">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/footer-lock.svg" height="30">
     <img src="./assets/footer-lock.svg" alt="padlock" height="30">
   </picture>
 </p>
@@ -187,8 +187,8 @@ No amount of coercive force will ever solve a math problem."</i>
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/footer-lock-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="./assets/footer-lock.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/footer-lock-dark.svg" height="30">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/footer-lock.svg" height="30">
     <img src="./assets/footer-lock.svg" alt="padlock" height="30">
   </picture>
 </p>
